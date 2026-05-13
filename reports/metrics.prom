@@ -1,0 +1,43 @@
+# HELP agent_requests_total Total requests handled by the gateway
+# TYPE agent_requests_total counter
+agent_requests_total 480
+# HELP cache_hits_total Total cache hits
+# TYPE cache_hits_total counter
+cache_hits_total 469
+# HELP agent_cost_usd_total Cumulative cost in USD
+# TYPE agent_cost_usd_total counter
+agent_cost_usd_total 0.043924
+# HELP agent_availability_ratio Current availability ratio (0–1)
+# TYPE agent_availability_ratio gauge
+agent_availability_ratio 0.9958
+# HELP agent_error_rate_ratio Current error rate ratio (0–1)
+# TYPE agent_error_rate_ratio gauge
+agent_error_rate_ratio 0.0042
+# HELP agent_cache_hit_rate Cache hit rate (0–1)
+# TYPE agent_cache_hit_rate gauge
+agent_cache_hit_rate 0.9771
+# HELP circuit_state Circuit breaker state (0=closed, 1=half_open, 2=open)
+# TYPE circuit_state gauge
+# HELP slo_compliance SLO compliance (1=pass, 0=fail)
+# TYPE slo_compliance gauge
+slo_compliance{slo="availability_>=_99%"} 1
+slo_compliance{slo="cache_hit_rate_>=_20%"} 1
+slo_compliance{slo="error_rate_<=_5%"} 1
+slo_compliance{slo="p95_latency_<=_2500ms"} 1
+slo_compliance{slo="p99_latency_<=_5000ms"} 1
+slo_compliance{slo="recovery_time_<=_3000ms"} 1
+# HELP agent_latency_seconds Request latency in seconds
+# TYPE agent_latency_seconds histogram
+agent_latency_seconds{provider="all",le="0.005"} 457
+agent_latency_seconds{provider="all",le="0.01"} 463
+agent_latency_seconds{provider="all",le="0.025"} 465
+agent_latency_seconds{provider="all",le="0.05"} 469
+agent_latency_seconds{provider="all",le="0.1"} 469
+agent_latency_seconds{provider="all",le="0.25"} 512
+agent_latency_seconds{provider="all",le="0.5"} 581
+agent_latency_seconds{provider="all",le="1.0"} 600
+agent_latency_seconds{provider="all",le="2.5"} 600
+agent_latency_seconds{provider="all",le="5.0"} 600
+agent_latency_seconds{provider="all",le="10.0"} 600
+agent_latency_seconds{provider="all"_sum} 40.842062
+agent_latency_seconds{provider="all"_count} 600

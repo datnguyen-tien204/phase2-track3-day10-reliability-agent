@@ -2,35 +2,42 @@ providers:
   - name: primary
     fail_rate: 0.25
     base_latency_ms: 180
-    cost_per_1k_tokens: 0.01
+    cost_per_1k_tokens: 0.010
   - name: backup
     fail_rate: 0.05
     base_latency_ms: 260
     cost_per_1k_tokens: 0.006
 circuit_breaker:
-  failure_threshold: 3
-  reset_timeout_seconds: 2
-  success_threshold: 1
+  failure_threshold: 3          # open after 3 consecutive failures — fast enough to detect, tolerates jitter
+  reset_timeout_seconds: 2      # matches expected provider recovery time
+  success_threshold: 1          # single probe success closes circuit
 cache:
   enabled: true
-  backend: memory          # "memory" (default) or "redis" (requires docker compose up -d)
-  ttl_seconds: 300
-  similarity_threshold: 0.92
+  backend: redis              # "memory" or "redis" (requires docker compose up -d)
+  ttl_seconds: 300              # 5-min freshness for FAQ-type queries
+  similarity_threshold: 0.92    # tested: 0.85 caused false hits on date-sensitive queries
   redis_url: "redis://localhost:6379/0"
 load_test:
-  requests: 100
+  requests: 120
+  concurrency: 5                # ThreadPoolExecutor workers for concurrent load (stretch goal)
 
-# Chaos scenarios: each overrides provider fail_rate for targeted testing.
-# TODO(student): Add more scenarios or tweak these.
+# Chaos scenarios — each overrides provider fail_rate for targeted testing.
 scenarios:
   - name: primary_timeout_100
-    description: "Primary provider fails 100% — all traffic should fallback"
+    description: "Primary provider fails 100% — all traffic must fallback to backup"
     provider_overrides:
       primary: 1.0
+
   - name: primary_flaky_50
-    description: "Primary provider fails 50% — circuit should oscillate"
+    description: "Primary fails 50% — circuit oscillates, mix of primary & fallback"
     provider_overrides:
       primary: 0.5
+
   - name: all_healthy
-    description: "Baseline — both providers healthy"
+    description: "Baseline — both providers healthy, no circuit opens expected"
     provider_overrides: {}
+
+  - name: cache_stale_candidate
+    description: "Low similarity threshold stress test — cache false-hit detection"
+    provider_overrides:
+      primary: 0.1

@@ -60,8 +60,12 @@ class RunMetrics(BaseModel):
         }
 
     def write_json(self, path: str | Path) -> None:
+        from reliability_lab.slo import SLOChecker, DEFAULT_SLOS  # avoid circular at module level
+
         Path(path).parent.mkdir(parents=True, exist_ok=True)
-        Path(path).write_text(json.dumps(self.to_report_dict(), indent=2, ensure_ascii=False))
+        report = self.to_report_dict()
+        report["slo_compliance"] = SLOChecker(DEFAULT_SLOS).to_report_dict(self)
+        Path(path).write_text(json.dumps(report, indent=2, ensure_ascii=True), encoding="utf-8")
 
 
 def percentile(values: Iterable[float], q: float) -> float:

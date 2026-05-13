@@ -12,8 +12,16 @@ src/reliability_lab/circuit_breaker.py
 src/reliability_lab/config.py
 src/reliability_lab/gateway.py
 src/reliability_lab/metrics.py
+src/reliability_lab/prometheus_export.py
 src/reliability_lab/providers.py
+src/reliability_lab/redis_circuit_breaker.py
+src/reliability_lab/slo.py
+tests/test_cache_extra.py
+tests/test_circuit_breaker.py
 tests/test_config.py
 tests/test_gateway_contract.py
 tests/test_metrics.py
+tests/test_property_based.py
+tests/test_redis_cache.py
+tests/test_redis_circuit_breaker.py
 tests/test_todo_requirements.py

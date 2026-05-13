@@ -1,0 +1,12 @@
+SLO Compliance Report
+=======================================================
+SLO                                   Result  Description
+--------------------------------------------------------------------------------
+availability >= 99%                 ✅ PASS  At least 99% of requests must succeed (cache hits + provider successes).
+error_rate <= 5%                    ✅ PASS  Hard errors (static fallbacks) must stay below 5%.
+p95_latency <= 2500ms               ✅ PASS  P95 end-to-end latency must be below 2.5 seconds.
+p99_latency <= 5000ms               ✅ PASS  P99 end-to-end latency must be below 5 seconds.
+cache_hit_rate >= 20%               ✅ PASS  Cache must serve at least 20% of total requests.
+recovery_time <= 3000ms             ✅ PASS  Circuit breaker recovery (OPEN→CLOSED) should take < 3 s (skipped if no recovery occurred).
+--------------------------------------------------------------------------------
+Overall: ✅ ALL SLOs MET

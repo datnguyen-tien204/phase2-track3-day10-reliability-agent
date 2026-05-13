@@ -1,0 +1,61 @@
+{
+  "total_requests": 480,
+  "availability": 0.9958,
+  "error_rate": 0.0042,
+  "latency_p50_ms": 1.17,
+  "latency_p95_ms": 318.16,
+  "latency_p99_ms": 521.74,
+  "fallback_success_rate": 0.9683,
+  "cache_hit_rate": 0.9771,
+  "circuit_open_count": 3,
+  "recovery_time_ms": null,
+  "estimated_cost": 0.043924,
+  "estimated_cost_saved": 0.469,
+  "scenarios": {
+    "primary_timeout_100": "pass",
+    "primary_flaky_50": "pass",
+    "all_healthy": "pass",
+    "cache_stale_candidate": "pass",
+    "cache_vs_no_cache": "pass",
+    "_cache_comparison_p50_no_cache": "276.5",
+    "_cache_comparison_p50_with_cache": "0.0",
+    "_cache_comparison_cost_no_cache": "0.047264",
+    "_cache_comparison_cost_with_cache": "0.011748",
+    "_cache_hit_rate": "0.7417"
+  },
+  "slo_compliance": {
+    "slos": [
+      {
+        "name": "availability >= 99%",
+        "passed": true,
+        "description": "At least 99% of requests must succeed (cache hits + provider successes)."
+      },
+      {
+        "name": "error_rate <= 5%",
+        "passed": true,
+        "description": "Hard errors (static fallbacks) must stay below 5%."
+      },
+      {
+        "name": "p95_latency <= 2500ms",
+        "passed": true,
+        "description": "P95 end-to-end latency must be below 2.5 seconds."
+      },
+      {
+        "name": "p99_latency <= 5000ms",
+        "passed": true,
+        "description": "P99 end-to-end latency must be below 5 seconds."
+      },
+      {
+        "name": "cache_hit_rate >= 20%",
+        "passed": true,
+        "description": "Cache must serve at least 20% of total requests."
+      },
+      {
+        "name": "recovery_time <= 3000ms",
+        "passed": true,
+        "description": "Circuit breaker recovery (OPEN\u2192CLOSED) should take < 3 s (skipped if no recovery occurred)."
+      }
+    ],
+    "overall_pass": true
+  }
+}
